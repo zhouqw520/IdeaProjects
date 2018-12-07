@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+    <!-- 通过全类名的方式来配置bean-->
+    <bean id="dog1" class="com.spring.beans.Dog">
+        <constructor-arg value="藏獒"></constructor-arg>
+    </bean>
+
+    <bean id="car1" class="com.spring.beans.Car">
+        <!--按照顺序赋值参数-->
+        <constructor-arg value="宝马"></constructor-arg>
+        <constructor-arg value="长春一汽"></constructor-arg>
+        <constructor-arg value="300000"></constructor-arg>
+    </bean>
+    <bean id="car2" class="com.spring.beans.Car">
+        <!--按照顺序赋值参数-->
+        <constructor-arg value="奥迪" index="0"></constructor-arg>
+        <constructor-arg value="长春一汽" index="1"></constructor-arg>
+        <constructor-arg value="800000" index="2"></constructor-arg>
+    </bean>
+    <bean id="car3" class="com.spring.beans.Car">
+        <!--按照顺序赋值参数-->
+        <constructor-arg value="马自达" type="java.lang.String"></constructor-arg>
+        <constructor-arg value="长安马自达" type="java.lang.String"></constructor-arg>
+        <constructor-arg value="500000" type="double"></constructor-arg>
+    </bean>
+    <bean id="car4" class="com.spring.beans.Car">
+        <property name="type">
+            <value><![CDATA[<奥迪>]]></value>
+        </property>
+        <property name="factory" value="长春一汽"></property>
+        <property name="price" value="800000"></property>
+    </bean>
+
+    <bean id="person1" class="com.spring.beans.Person">
+        <property name="name" value="权慑天下"></property>
+        <property name="age" value="26"></property>
+        <property name="car" ref="car1"></property>
+    </bean>
+    <bean id="person2" class="com.spring.beans.Person">
+        <property name="name" value="权慑天下"></property>
+        <property name="age" value="26"></property>
+        <property name="car">
+            <ref bean="car2"></ref>
+        </property>
+    </bean>
+    <bean id="person3" class="com.spring.beans.Person">
+        <constructor-arg name="name" value="张三"></constructor-arg>
+        <constructor-arg name="age" value="26"></constructor-arg>
+        <constructor-arg name="car" ref="car1"></constructor-arg>
+        <constructor-arg name="dog" ref="dog1"></constructor-arg>
+    </bean>
+    <bean id="person4" class="com.spring.beans.Person">
+        <constructor-arg name="name" value="王五"></constructor-arg>
+        <constructor-arg name="age" value="20"></constructor-arg>
+        <constructor-arg name="car">
+            <ref bean="car2"></ref>
+        </constructor-arg>
+        <constructor-arg name="dog">
+            <ref bean="dog1"></ref>
+        </constructor-arg>
+    </bean>
+    <bean id="person5" class="com.spring.beans.Person">
+        <property name="name" value="李四"></property>
+        <property name="age" value="22"></property>
+        <property name="car">
+            <bean class="com.spring.beans.Car">
+                <property name="type" value="比亚迪"></property>
+                <property name="factory" value="长春一汽"></property>
+                <property name="price" value="100000"></property>
+            </bean>
+        </property>
+    </bean>
+    <bean id="person6" class="com.spring.beans.Person">
+        <property name="name" value="小朱"></property>
+        <property name="age" value="20"></property>
+        <property name="car">
+            <list>
+                <bean class="com.spring.beans.Car">
+                    <property name="type" value="宝马"></property>
+                    <property name="factory" value="长春一汽"></property>
+                    <property name="price" value="200000"></property>
+                </bean>
+                <bean class="com.spring.beans.Car">
+                    <property name="type" value="保时捷"></property>
+                    <property name="factory" value="长春一汽"></property>
+                    <property name="price" value="100000"></property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="person7" class="com.spring.beans.Person">
+        <property name="name" value="小朱"></property>
+        <property name="age" value="20"></property>
+        <property name="car">
+            <list>
+                <ref bean="car1"></ref>
+                <ref bean="car2"></ref>
+                <ref bean="car3"></ref>
+                <ref bean="car4"></ref>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="person8" class="com.spring.beans.Person">
+        <property name="name" value="李四"></property>
+        <property name="age" value="22"></property>
+        <property name="car">
+            <!--显示的声明所引用的是一个空值-->
+            <null></null>
+        </property>
+    </bean>
+
+    <bean id="car5" class="com.spring.beans.Car">
+        <constructor-arg name="type" value="悍马"></constructor-arg>
+        <constructor-arg name="factory" value="长春一汽"></constructor-arg>
+        <constructor-arg name="price" value="300000"></constructor-arg>
+    </bean>
+
+    <bean id="dog2" class="com.spring.beans.Dog">
+    </bean>
+    <bean id="person9" class="com.spring.beans.Person">
+        <property name="name" value="李四"></property>
+        <property name="age" value="22"></property>
+        <property name="dog" ref="dog2"></property>
+        <property name="dog.type" value="小白"></property>
+    </bean>
+
+    <bean name="cat1" class="com.spring.beans.Cat">
+        <property name="name">
+            <list>
+                <value>小花</value>
+                <value>小黄</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean name="cat2" class="com.spring.beans.Cat">
+        <property name="name">
+            <list>
+                <value>花花</value>
+                <value>白白</value>
+            </list>
+        </property>
+        <property name="carMap">
+            <map>
+                <entry key="first" value-ref="car1"></entry>
+                <entry key="second" value-ref="car2"></entry>
+            </map>
+        </property>
+    </bean>
+
+    <util:list id="cars">
+        <ref bean="car1"></ref>
+        <ref bean="car2"></ref>
+    </util:list>
+
+    <bean id="person10" class="com.spring.beans.Person">
+        <property name="name" value="权慑天下"></property>
+        <property name="age" value="26"></property>
+        <property name="car" ref="cars"></property>
+    </bean>
+
+    <!--p命令空间可以通过属性的方式来进行字段的注入-->
+    <bean id="person11" class="com.spring.beans.Person" p:name="小周" p:age="20" p:car-ref="cars" p:dog-ref="dog1"></bean>
+</beans>

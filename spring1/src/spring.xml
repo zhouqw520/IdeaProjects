@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <bean id="myBeanPostProcessor" class="com.spring.beans.MyBeanPostProcessor"></bean>
+    <!--bean的自动装配，可以让一个bean对象自动的引用其他的bean
+        bytype:按照类型进行装配
+            缺点：如果在IOC容器中存在多个同类型的bean时，出现异常
+        byName:按照名称进行装配,要求bean属性名称必须与引用的bean的id值保持一致
+    -->
+    <bean id="car" class="com.spring.beans.Car" p:type="宝马"></bean>
+    <bean id="person1" class="com.spring.beans.Person" p:name="小李" p:car-ref="car"></bean>
+    <!--继承-->
+    <bean id="person2" parent="person1" p:name="小王"></bean>
+    <!--抽象类-->
+    <!--1、指定父类class元素-->
+    <bean id="abstractPerson" abstract="true" class="com.spring.beans.Person" p:name="Tom" p:car-ref="car"></bean>
+    <bean id="person3" parent="abstractPerson"></bean>
+    <!--2、不指定父类class元素，子类bean指定-->
+    <bean id="abstractPerson1" abstract="true" ></bean>
+    <bean id="person4" parent="abstractPerson1" class="com.spring.beans.Person"></bean>
+
+    <!--依赖-->
+    <bean id="car1" class="com.spring.beans.Car" p:type="宝马"></bean>
+    <bean id="person5" class="com.spring.beans.Person" p:name="权慑天下" p:car-ref="car1" depends-on="car1"></bean>
+
+    <!--作用域-->
+    <bean id="car2" class="com.spring.beans.Car" p:type="玛莎拉蒂" scope="prototype"></bean>
+
+    <!--引用外部属性文件，完成属性值与bean的配置分离，解耦
+        1、创建属性文件：*.properties key=value
+        2、配置文件中引用外部属性文件的内容，通过key值来引用。${key}
+        3、告知IOC容器引用的属性文件
+    -->
+    <context:property-placeholder location="classpath:person.properties"></context:property-placeholder>
+    <bean id="person6" class="com.spring.beans.Person" p:name="${personName}" p:age="${personAge}" p:car-ref="car"></bean>
+
+    <!--SpEL-->
+    <bean id="person7" class="com.spring.beans.Person">
+        <property name="name" value="tom"></property>
+        <property name="age" value="28"></property>
+        <property name="car" value="#{car1}"></property>
+    </bean>
+
+    <!--<bean id="person8" class="com.spring.beans.Person">-->
+        <!--<property name="name" value="#{person7.name.toUpperCase()}"></property>-->
+        <!--<property name="age" value="#{person7.age+20}"></property>-->
+        <!--<property name="car" value="#{person7.car}"></property>-->
+    <!--</bean>-->
+
+    <bean id="person9" class="com.spring.beans.Person">
+        <property name="name" value="tom"></property>
+        <property name="age" value="28"></property>
+        <property name="car" value="#{car1}"></property>
+    </bean>
+</beans>
